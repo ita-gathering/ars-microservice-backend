@@ -1,13 +1,17 @@
 package com.springcloud.service;
 
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springcloud.dto.ActivityDto;
 import com.springcloud.dto.ResponseDto;
 import com.springcloud.po.User;
 import com.springcloud.repository.UserRepository;
+import jdk.internal.org.objectweb.asm.TypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,6 +30,10 @@ public class UserService {
 
     public User createUser(User user) {
         return userRepository.save(user);
+    }
+
+    public User getUserByUserName(String userName) {
+        return userRepository.findByUserName(userName);
     }
 
     public User deleteUser(String userId) {

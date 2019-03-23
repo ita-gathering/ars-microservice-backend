@@ -1,5 +1,6 @@
 package com.springcloud.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.springcloud.dto.ResponseDto;
 import com.springcloud.po.User;
 import com.springcloud.service.UserService;
@@ -26,6 +27,15 @@ public class UserController {
     @PostMapping("/user")
     public ResponseDto createUser(@RequestBody User user) {
         userService.createUser(user);
+        return ResponseDto.success(user);
+    }
+
+    @GetMapping("/user/{userName}")
+    public ResponseDto getUserByUserName(@PathVariable String userName) {
+        User user = userService.getUserByUserName(userName);
+        if (Objects.isNull(user)) {
+            return ResponseDto.fail("can not find user");
+        }
         return ResponseDto.success(user);
     }
 

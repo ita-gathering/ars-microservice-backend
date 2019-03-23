@@ -15,7 +15,7 @@ public class ActivityDto {
     private String author;
     private String title;
     private String content;
-//    private List<UserDto> participants;
+    private List<UserDto> participants;
     private LocalDateTime startDate;
     private LocalDateTime closingDate;
 

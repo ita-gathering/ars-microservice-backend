@@ -42,15 +42,17 @@ public class ActivityController {
         return ResponseDto.success(activity);
     }
 
-//    @GetMapping
-//    public ResponseDto getActivityByCriteria(
-//            @RequestParam(name = "title", required = false) String title,
-//            @RequestParam(name = "author", required = false) String author) {
-//        AcitivitySearchCriteria searchCriteria = new AcitivitySearchCriteria();
-//        searchCriteria.setTitle(title);
-//        searchCriteria.setAuthor(author);
-//        return ResponseDto.success(activityService.getActivityByCriteria(searchCriteria));
-//    }
+    @GetMapping
+    public ResponseDto getActivityByCriteria(
+            @RequestParam(name = "title", required = false) String title,
+            @RequestParam(name = "author", required = false) String author,
+            @RequestParam(name = "participant", required = false) String participant) {
+        AcitivitySearchCriteria searchCriteria = new AcitivitySearchCriteria();
+        searchCriteria.setTitle(title);
+        searchCriteria.setAuthor(author);
+        searchCriteria.setParticipant(participant);
+        return ResponseDto.success(activityService.getActivityByCriteria(searchCriteria));
+    }
 
     @PutMapping("/{activityId}")
     public ResponseDto updateActivity(@PathVariable String activityId, @RequestBody Activity newActivity) {
@@ -69,17 +71,17 @@ public class ActivityController {
         return ResponseDto.success(deletedActivity);
     }
 
-//    @PatchMapping("/{activityId}")
-//    public ResponseDto participateActivity(@PathVariable String activityId, @RequestBody JSONObject jsonObject) {
-//        String username = (String) jsonObject.get("userName");
-//        if (Objects.isNull(username)) {
-//            return ResponseDto.fail("userName should not be empty");
-//        }
-//        String result = activityService.participateActivity(activityId, username);
-//        if (StringUtils.isEmpty(result)) {
-//            return ResponseDto.success();
-//        }
-//        return ResponseDto.fail(result);
-//    }
+    @PatchMapping("/{activityId}")
+    public ResponseDto participateActivity(@PathVariable String activityId, @RequestBody JSONObject jsonObject) {
+        String username = (String) jsonObject.get("userName");
+        if (Objects.isNull(username)) {
+            return ResponseDto.fail("userName should not be empty");
+        }
+        String result = activityService.participateActivity(activityId, username);
+        if (StringUtils.isEmpty(result)) {
+            return ResponseDto.success();
+        }
+        return ResponseDto.fail(result);
+    }
 
 }
