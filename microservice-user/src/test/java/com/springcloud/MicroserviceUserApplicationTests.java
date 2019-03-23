@@ -1,4 +1,4 @@
-package com.springcloud.microserviceuser;
+package com.springcloud;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
