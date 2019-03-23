@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.springcloud.dto.ResponseDto;
 import com.springcloud.po.User;
 import com.springcloud.service.UserService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -12,10 +14,15 @@ import java.util.Objects;
 /**
  * Created by guowanyi on 2019/3/12.
  */
+
 @RestController
+@RefreshScope
 public class UserController {
+
     @Resource
     private UserService userService;
+    @Value("${config}")
+    private String config;
 
     @PostMapping("/user")
     public ResponseDto createUser(@RequestBody User user) {
@@ -49,4 +56,8 @@ public class UserController {
 //        return ResponseDto.success(userService.getActivitiesByUserName(userName));
 //    }
 
+    @GetMapping("/config")
+    public String testGetConfig(){
+        return config;
+    }
 }
