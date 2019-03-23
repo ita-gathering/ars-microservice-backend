@@ -1,10 +1,14 @@
 package com.springcloud.service;
 
+import com.springcloud.dto.ActivityDto;
+import com.springcloud.dto.ResponseDto;
 import com.springcloud.po.User;
 import com.springcloud.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -14,32 +18,28 @@ import java.util.Objects;
 public class UserService {
 
     @Resource
+    private RestTemplate restTemplate;
+    @Resource
     private UserRepository userRepository;
 
-    public User getUserByUserName(String userName){
-        return userRepository.findByUserName(userName);
-    }
+    private static final String MICRO_SERVICE_ACTIVITY = "micro-service-activity";
 
-    public User createUser(User user){
+    public User createUser(User user) {
         return userRepository.save(user);
     }
 
-    public User deleteUser(String userId){
+    public User deleteUser(String userId) {
         User user = userRepository.findById(userId).orElse(null);
-        if(Objects.isNull(user)){
+        if (Objects.isNull(user)) {
             return null;
         }
         userRepository.delete(user);
         return user;
     }
 
-//    public List<ActivityDto> getActivitiesByUserName(String userName) {
-//        List<Activity> activities = activityRepository.findAllByUserName(userName);
-//        List<ActivityDto> activityDtos = WrappedBeanCopier.copyPropertiesOfList(activities, ActivityDto.class);
-//        activityDtos.forEach(activityDto -> {
-//            List<UserDto> userDtos = WrappedBeanCopier.copyPropertiesOfList(activityDto.getParticipants(), UserDto.class);
-//            activityDto.setParticipants(userDtos);
-//        });
-//        return activityDtos;
-//    }
+    public List<ActivityDto> getActivitiesByUserName(String userName) {
+        String url = "http://" + MICRO_SERVICE_ACTIVITY + "/activity?participant=" + userName;
+        ResponseDto activityResponseDto = restTemplate.getForObject(url, ResponseDto.class);
+        return (List<ActivityDto>) activityResponseDto.getData();
+    }
 }

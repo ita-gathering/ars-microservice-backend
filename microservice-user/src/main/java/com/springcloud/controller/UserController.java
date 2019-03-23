@@ -1,6 +1,5 @@
 package com.springcloud.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.springcloud.dto.ResponseDto;
 import com.springcloud.po.User;
 import com.springcloud.service.UserService;
@@ -30,18 +29,6 @@ public class UserController {
         return ResponseDto.success(user);
     }
 
-    @GetMapping("/user/{userName}")
-    public ResponseDto getUserByUserName(@PathVariable String userName, @RequestBody JSONObject request) {
-        User user = userService.getUserByUserName(userName);
-        if (Objects.isNull(user)) {
-            return ResponseDto.fail("can not find user");
-        }
-        if (user.getPassword().equals(request.get("description"))) {
-            return ResponseDto.success(user);
-        }
-        return ResponseDto.fail("can not login, password error");
-    }
-
     @DeleteMapping("/user/{userId}")
     public ResponseDto deleteUser(@PathVariable String userId) {
         User deletedUser = userService.deleteUser(userId);
@@ -51,13 +38,13 @@ public class UserController {
         return ResponseDto.success(deletedUser);
     }
 
-//    @GetMapping("/user/{userName}/activity")
-//    public ResponseDto getUserParticipatedActivitiesByUserName(@PathVariable String userName) {
-//        return ResponseDto.success(userService.getActivitiesByUserName(userName));
-//    }
+    @GetMapping("/user/{userName}/activity")
+    public ResponseDto getParticipatedActivitiesByUserName(@PathVariable String userName) {
+        return ResponseDto.success(userService.getActivitiesByUserName(userName));
+    }
 
     @GetMapping("/config")
-    public String testGetConfig(){
+    public String testGetConfig() {
         return config;
     }
 }
