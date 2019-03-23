@@ -1,0 +1,16 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: api-gateway
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7000/eureka/
+
+zuul:
+  routes:
+    micro-service-user: /userService/**
+    micro-service-activity: /activityService/**
