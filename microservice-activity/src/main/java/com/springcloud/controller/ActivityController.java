@@ -2,6 +2,7 @@ package com.springcloud.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.springcloud.dto.AcitivitySearchCriteria;
+import com.springcloud.dto.ActivityDto;
 import com.springcloud.dto.ResponseDto;
 import com.springcloud.po.Activity;
 import com.springcloud.service.ActivityService;
@@ -29,17 +30,17 @@ public class ActivityController {
                 || Objects.isNull(activity.getContent())) {
             return ResponseDto.fail("author,title,content should not be empty");
         }
-        activityService.createActivity(activity);
-        return ResponseDto.success(activity);
+        ActivityDto activityDto = activityService.createActivity(activity);
+        return ResponseDto.success(activityDto);
     }
 
     @GetMapping("/{activityId}")
     public ResponseDto getActivityById(@PathVariable String activityId) {
-        Activity activity = activityService.getActivityById(activityId);
-        if (Objects.isNull(activity)) {
+        ActivityDto activityDto = activityService.getActivityById(activityId);
+        if (Objects.isNull(activityDto)) {
             return ResponseDto.fail("can not find activity");
         }
-        return ResponseDto.success(activity);
+        return ResponseDto.success(activityDto);
     }
 
     @GetMapping
@@ -64,11 +65,10 @@ public class ActivityController {
 
     @DeleteMapping("/{activityId}")
     public ResponseDto deleteActivity(@PathVariable String activityId) {
-        Activity deletedActivity = activityService.deleteActivity(activityId);
-        if (Objects.isNull(deletedActivity)) {
-            return ResponseDto.fail("delete activity failed");
+        if (activityService.deleteActivity(activityId)) {
+            return ResponseDto.success();
         }
-        return ResponseDto.success(deletedActivity);
+        return ResponseDto.fail("delete activity failed");
     }
 
     @PatchMapping("/{activityId}")

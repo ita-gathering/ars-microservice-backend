@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author Ocean Liang
@@ -31,12 +32,23 @@ public class ActivityService {
     private RestTemplate restTemplate;
     private static final String MIRCO_SERVICE_USER = "micro-service-user";
 
-    public Activity createActivity(Activity activity) {
-        return activityRepository.save(activity);
+    public ActivityDto createActivity(Activity activity) {
+        return constructActivityDto(activityRepository.save(activity));
     }
 
-    public Activity getActivityById(String activityId) {
-        return activityRepository.findById(activityId).orElse(null);
+    public ActivityDto getActivityById(String activityId) {
+        Activity activity = activityRepository.findById(activityId).orElse(null);
+        if (activity == null) {
+            return null;
+        }
+        return constructActivityDto(activity);
+    }
+
+    private ActivityDto constructActivityDto(Activity activity) {
+        ActivityDto activityDto = WrappedBeanCopier.copyProperties(activity, ActivityDto.class);
+        List<UserDto> userDtos = WrappedBeanCopier.copyPropertiesOfList(activityDto.getParticipants(), UserDto.class);
+        activityDto.setParticipants(userDtos);
+        return activityDto;
     }
 
     public boolean updateActivity(String activityId, Activity newActivity) {
@@ -52,39 +64,34 @@ public class ActivityService {
         return true;
     }
 
-    public Activity deleteActivity(String activityId) {
+    public boolean deleteActivity(String activityId) {
         Activity activity = activityRepository.findById(activityId).orElse(null);
         if (Objects.isNull(activity)) {
-            return null;
+            return false;
         }
         activityRepository.delete(activity);
-        return activity;
+        return true;
     }
 
     public List<ActivityDto> getActivityByCriteria(AcitivitySearchCriteria searchCriteria) {
-        List<Activity> activities;
-//        if (searchCriteria.getAuthor() != null) {
-//            if (searchCriteria.getTitle() == null) {
-//                activities = activityRepository.findAllByAuthor(searchCriteria.getAuthor());
-//            } else {
-//                activities = activityRepository.findAllByTitleLikeAndAuthor(searchCriteria.getTitle(), searchCriteria.getAuthor());
-//            }
-//        } else {
-//            if (searchCriteria.getTitle() != null) {
-//                activities = activityRepository.findAllByTitleLike(searchCriteria.getTitle());
-//            } else {
-//                activities = activityRepository.findAll();
-//            }
-//        }
+        List<Activity> activities = getActivity(searchCriteria);
+        return activities.stream().map(this::constructActivityDto).collect(Collectors.toList());
+    }
 
-        activities = activityRepository.findAllByUserName(searchCriteria.getParticipant());
-
-        List<ActivityDto> activityDtos = WrappedBeanCopier.copyPropertiesOfList(activities, ActivityDto.class);
-        activityDtos.forEach(activityDto -> {
-            List<UserDto> userDtos = WrappedBeanCopier.copyPropertiesOfList(activityDto.getParticipants(), UserDto.class);
-            activityDto.setParticipants(userDtos);
-        });
-        return activityDtos;
+    private List<Activity> getActivity(AcitivitySearchCriteria searchCriteria) {
+        if (searchCriteria.getAuthor() != null) {
+            if (searchCriteria.getTitle() == null) {
+                return activityRepository.findAllByAuthor(searchCriteria.getAuthor());
+            }
+            return activityRepository.findAllByTitleLikeAndAuthor(searchCriteria.getTitle(), searchCriteria.getAuthor());
+        }
+        if (searchCriteria.getTitle() != null) {
+            return activityRepository.findAllByTitleLike(searchCriteria.getTitle());
+        }
+        if (searchCriteria.getParticipant() != null) {
+            return activityRepository.findAllByUserName(searchCriteria.getParticipant());
+        }
+        return activityRepository.findAll();
     }
 
     public String participateActivity(String activityId, String username) {
