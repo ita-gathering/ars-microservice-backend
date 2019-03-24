@@ -1,6 +1,10 @@
 spring:
   application:
     name: eureka-server
+  security:
+    user:
+      name: admin
+      password: admin
 
 server:
   port: 7000
@@ -8,6 +12,6 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:${server.port}/eureka/
+      defaultZone: http://admin:admin@localhost:${server.port}/eureka/
     fetch-registry: false
     register-with-eureka: false

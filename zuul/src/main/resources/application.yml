@@ -8,7 +8,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:7000/eureka/
+      defaultZone: http://admin:admin@localhost:7000/eureka/
 
 zuul:
   routes:
