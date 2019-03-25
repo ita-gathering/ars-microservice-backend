@@ -6,10 +6,11 @@
 
 ### Start Sequence
 1. EurekaApplication
-2. ConfigServerApplication
-2. MicroserviceUserApplication
-3. MicroserviceActivityApplication
-4. ZuulApplication
+2. EurekaBackupApplication
+3. ConfigServerApplication
+4. MicroserviceUserApplication
+5. MicroserviceActivityApplication
+6. ZuulApplication
 
 
 ### Url
