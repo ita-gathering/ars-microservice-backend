@@ -1,6 +1,5 @@
 package com.springcloud.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.springcloud.dto.ResponseDto;
 import com.springcloud.po.User;
 import com.springcloud.service.UserService;
@@ -46,11 +45,6 @@ public class UserController {
             return ResponseDto.fail("delete user failed");
         }
         return ResponseDto.success(deletedUser);
-    }
-
-    @GetMapping("/user/{userName}/activity")
-    public ResponseDto getParticipatedActivitiesByUserName(@PathVariable String userName) {
-        return ResponseDto.success(userService.getActivitiesByUserName(userName));
     }
 
     @GetMapping("/config")
