@@ -16,6 +16,7 @@ import java.util.Objects;
 
 @RestController
 @RefreshScope
+@RequestMapping("/user")
 public class UserController {
 
     @Resource
@@ -23,13 +24,13 @@ public class UserController {
     @Value("${config}")
     private String config;
 
-    @PostMapping("/user")
+    @PostMapping
     public ResponseDto createUser(@RequestBody User user) {
         userService.createUser(user);
         return ResponseDto.success(user);
     }
 
-    @GetMapping("/user/{userName}")
+    @GetMapping("/{userName}")
     public ResponseDto getUserByUserName(@PathVariable String userName) {
         User user = userService.getUserByUserName(userName);
         if (Objects.isNull(user)) {
@@ -38,7 +39,7 @@ public class UserController {
         return ResponseDto.success(user);
     }
 
-    @DeleteMapping("/user/{userId}")
+    @DeleteMapping("/{userId}")
     public ResponseDto deleteUser(@PathVariable String userId) {
         User deletedUser = userService.deleteUser(userId);
         if (Objects.isNull(deletedUser)) {

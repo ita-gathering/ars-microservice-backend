@@ -7,6 +7,8 @@ import com.springcloud.dto.ResponseDto;
 import com.springcloud.po.Activity;
 import com.springcloud.service.ActivityService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,10 +21,13 @@ import java.util.Objects;
  */
 @Slf4j
 @RestController
+@RefreshScope
 @RequestMapping("/activity")
 public class ActivityController {
     @Resource
     private ActivityService activityService;
+    @Value("${config}")
+    private String config;
 
     @PostMapping
     public ResponseDto createActivity(@RequestBody Activity activity) {
@@ -84,4 +89,8 @@ public class ActivityController {
         return ResponseDto.fail(result);
     }
 
+    @GetMapping("/config")
+    public String testGetConfig(){
+        return config;
+    }
 }

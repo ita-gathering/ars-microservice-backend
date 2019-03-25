@@ -1,2 +1,7 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/ars
+
 config:
-  test dev
+  config dev
