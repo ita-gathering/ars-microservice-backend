@@ -2,6 +2,7 @@ package com.springcloud.service;
 
 import com.springcloud.po.User;
 import com.springcloud.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -21,6 +22,7 @@ public class UserService {
     }
 
     public User getUserByUserName(String userName) {
+        System.out.println("user1 has been called");
         return userRepository.findByUserName(userName);
     }
 

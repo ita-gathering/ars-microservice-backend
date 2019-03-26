@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 @EnableDiscoveryClient
 @SpringBootApplication
-public class MicroserviceUserApplication {
+public class MicroserviceUser1Application {
 
     @Bean
     @LoadBalanced
@@ -19,7 +19,7 @@ public class MicroserviceUserApplication {
     }
 
     public static void main(String[] args) {
-		SpringApplication.run(MicroserviceUserApplication.class, args);
+		SpringApplication.run(MicroserviceUser1Application.class, args);
 	}
 
 }

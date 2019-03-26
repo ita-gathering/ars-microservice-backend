@@ -62,7 +62,8 @@
     <modules>
         <module>eureka</module>
         <module>eureka-backup</module>
-        <module>microservice-user</module>
+        <module>microservice-user1</module>
+        <module>microservice-user2</module>
         <module>microservice-activity</module>
         <module>zuul</module>
         <module>config-server</module>
