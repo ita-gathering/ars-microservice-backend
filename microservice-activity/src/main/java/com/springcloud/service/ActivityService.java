@@ -97,7 +97,6 @@ public class ActivityService {
 
     @HystrixCommand(fallbackMethod = "fallback")
     public String participateActivity(String activityId, String username) {
-        System.out.println("come in");
         String url = "http://" + MIRCO_SERVICE_USER + "/user/" + username;
         ResponseDto userResponseDto = restTemplate.getForObject(url, ResponseDto.class);
         if (FAILED.equals(userResponseDto.getStatus())) {
@@ -126,7 +125,6 @@ public class ActivityService {
     }
 
     public String fallback(String activityId, String username){
-        System.out.println("fallback");
         return "network issue";
     }
 
