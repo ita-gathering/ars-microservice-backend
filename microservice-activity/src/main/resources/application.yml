@@ -15,7 +15,3 @@ management:
     web:
       exposure:
         include: bus-refresh
-
-rest:
-  userURL: http://micro-service-user
-
