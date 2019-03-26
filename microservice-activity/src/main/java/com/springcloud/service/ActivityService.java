@@ -1,6 +1,7 @@
 package com.springcloud.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.springcloud.dto.AcitivitySearchCriteria;
 import com.springcloud.dto.ActivityDto;
 import com.springcloud.dto.ResponseDto;
@@ -94,7 +95,9 @@ public class ActivityService {
         return activityRepository.findAll();
     }
 
+    @HystrixCommand(fallbackMethod = "fallback")
     public String participateActivity(String activityId, String username) {
+        System.out.println("come in");
         String url = "http://" + MIRCO_SERVICE_USER + "/user/" + username;
         ResponseDto userResponseDto = restTemplate.getForObject(url, ResponseDto.class);
         if (FAILED.equals(userResponseDto.getStatus())) {
@@ -120,6 +123,11 @@ public class ActivityService {
         }
         activityRepository.save(activity);
         return "";
+    }
+
+    public String fallback(String activityId, String username){
+        System.out.println("fallback");
+        return "network issue";
     }
 
 }

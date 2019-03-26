@@ -34,6 +34,14 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
             <version>3.10.0</version>
@@ -70,9 +78,9 @@
             <scope>test</scope>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>de.flapdoodle.embed</groupId>-->
-            <!--<artifactId>de.flapdoodle.embed.mongo</artifactId>-->
-            <!--<scope>test</scope>-->
+        <!--<groupId>de.flapdoodle.embed</groupId>-->
+        <!--<artifactId>de.flapdoodle.embed.mongo</artifactId>-->
+        <!--<scope>test</scope>-->
         <!--</dependency>-->
         <dependency>
             <groupId>com.esotericsoftware</groupId>
