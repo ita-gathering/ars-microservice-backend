@@ -32,6 +32,8 @@ public class ActivityService {
     private ActivityRepository activityRepository;
     @Resource @Qualifier("userRestTemplate")
     private RestTemplate restTemplate;
+    @Resource
+    private UserService userService;
 
     public ActivityDto createActivity(Activity activity) {
         return constructActivityDto(activityRepository.save(activity));
@@ -97,7 +99,7 @@ public class ActivityService {
 
     @HystrixCommand(fallbackMethod = "fallback")
     public String participateActivity(String activityId, String username) {
-        ResponseDto userResponseDto = restTemplate.getForObject("/user/{1}", ResponseDto.class, username);
+        ResponseDto userResponseDto = userService.getUserByUserName(username);
         if (FAILED.equals(userResponseDto.getStatus())) {
             return "can not find user";
         }

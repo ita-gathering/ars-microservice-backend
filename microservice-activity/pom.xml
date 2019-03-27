@@ -87,6 +87,11 @@
             <artifactId>reflectasm</artifactId>
             <version>1.11.7</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-feign</artifactId>
+            <version>1.4.0.RELEASE</version>
+        </dependency>
     </dependencies>
 
 </project>
