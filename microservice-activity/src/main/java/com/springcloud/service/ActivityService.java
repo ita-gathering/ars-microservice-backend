@@ -97,8 +97,8 @@ public class ActivityService {
 
     @HystrixCommand(fallbackMethod = "fallback")
     public String participateActivity(String activityId, String username) {
-        String url = "http://" + MIRCO_SERVICE_USER + "/user/" + username;
-        ResponseDto userResponseDto = restTemplate.getForObject(url, ResponseDto.class);
+        String url = "http://" + MIRCO_SERVICE_USER + "/user/{1}";
+        ResponseDto userResponseDto = restTemplate.getForObject(url, ResponseDto.class, username);
         if (FAILED.equals(userResponseDto.getStatus())) {
             return "can not find user";
         }
