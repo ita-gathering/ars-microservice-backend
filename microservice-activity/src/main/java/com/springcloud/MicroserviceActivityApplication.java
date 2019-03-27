@@ -14,11 +14,11 @@ import org.springframework.web.client.RestTemplate;
 @EnableHystrixDashboard
 public class MicroserviceActivityApplication {
 
-    @Bean
-    @LoadBalanced
-    public RestTemplate restTemplate() {
-        return new RestTemplate(new OkHttp3ClientHttpRequestFactory());
-    }
+//    @Bean
+//    @LoadBalanced
+//    public RestTemplate restTemplate() {
+//        return new RestTemplate(new OkHttp3ClientHttpRequestFactory());
+//    }
 
     @Bean
     public ServletRegistrationBean getServlet(){

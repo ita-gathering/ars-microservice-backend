@@ -10,6 +10,7 @@ import com.springcloud.po.Activity;
 import com.springcloud.po.User;
 import com.springcloud.repository.ActivityRepository;
 import com.springcloud.utils.WrappedBeanCopier;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -29,9 +30,8 @@ public class ActivityService {
     private static final String FAILED = "failed";
     @Resource
     private ActivityRepository activityRepository;
-    @Resource
+    @Resource @Qualifier("userRestTemplate")
     private RestTemplate restTemplate;
-    private static final String MIRCO_SERVICE_USER = "micro-service-user";
 
     public ActivityDto createActivity(Activity activity) {
         return constructActivityDto(activityRepository.save(activity));
@@ -97,8 +97,7 @@ public class ActivityService {
 
     @HystrixCommand(fallbackMethod = "fallback")
     public String participateActivity(String activityId, String username) {
-        String url = "http://" + MIRCO_SERVICE_USER + "/user/{1}";
-        ResponseDto userResponseDto = restTemplate.getForObject(url, ResponseDto.class, username);
+        ResponseDto userResponseDto = restTemplate.getForObject("/user/{1}", ResponseDto.class, username);
         if (FAILED.equals(userResponseDto.getStatus())) {
             return "can not find user";
         }
