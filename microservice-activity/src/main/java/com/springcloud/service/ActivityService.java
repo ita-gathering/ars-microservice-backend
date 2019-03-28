@@ -47,7 +47,7 @@ public class ActivityService {
         return constructActivityDto(activity);
     }
 
-    private ActivityDto constructActivityDto(Activity activity) {
+    public ActivityDto constructActivityDto(Activity activity) {
         ActivityDto activityDto = WrappedBeanCopier.copyProperties(activity, ActivityDto.class);
         List<UserDto> userDtos = WrappedBeanCopier.copyPropertiesOfList(activityDto.getParticipants(), UserDto.class);
         activityDto.setParticipants(userDtos);

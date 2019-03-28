@@ -45,7 +45,7 @@
 //    @Test
 //    public void should_return_activity_when_create_activity() throws Exception {
 //        Activity activity = new Activity("Active_1","title","content");
-//        when(activityService.createActivity(any(Activity.class))).thenReturn(activity);
+//        when(activityService.createActivity(any(Activity.class))).thenReturn(activityService.constructActivityDto(activity));
 //
 //        ResultActions resultActions = this.mockMvc.perform(post("/activity")
 //                .contentType(MediaType.APPLICATION_JSON)
@@ -62,7 +62,7 @@
 //    @Test
 //    public void should_return_author_title_content_should_not_be_null_when_create_activity_and_content_is_empty() throws Exception {
 //        Activity activity = new Activity("Active_1","title",null);
-//        when(activityService.createActivity(any(Activity.class))).thenReturn(activity);
+//        when(activityService.createActivity(any(Activity.class))).thenReturn(activityService.constructActivityDto(activity));
 //
 //        ResultActions resultActions = this.mockMvc.perform(post("/activity")
 //                .contentType(MediaType.APPLICATION_JSON)
@@ -76,7 +76,7 @@
 //    @Test
 //    public void should_return_activity_when_given_activity_id() throws Exception {
 //        Activity activity = new Activity("Active_1","title","content");
-//        given(activityService.getActivityById("1")).willReturn(activity);
+//        given(activityService.getActivityById("1")).willReturn(activityService.constructActivityDto(activity));
 //
 //        ResultActions resultActions = this.mockMvc.perform(get("/activity/1"));
 //
@@ -125,7 +125,7 @@
 //    @Test
 //    public void should_return_delete_activity_when_given_activity_existed_in_DB() throws Exception {
 //        Activity activity = new Activity("Active_1","title","content");
-//        given(activityService.deleteActivity(anyString())).willReturn(activity);
+//        given(activityService.deleteActivity(anyString())).willReturn(true);
 //
 //        ResultActions resultActions = this.mockMvc.perform(delete("/activity/1"));
 //
