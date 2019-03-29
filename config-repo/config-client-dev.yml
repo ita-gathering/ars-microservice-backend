@@ -4,4 +4,4 @@ spring:
       uri: mongodb://localhost:27017/ars
 
 config:
-  config dev11
+  config dev
